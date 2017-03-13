@@ -1,0 +1,931 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,面向对象," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mushroom" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言在android的学习过程中，我时常感到自己的Java基础掌握的不够牢靠，极大地拉低了android开发的效率，所以我准备花费一段时间系统地复习一下Java。这次复习的参考书籍是大名鼎鼎的《Java编程思想》。
+抽象过程所有的编程语言都有抽象机制，那么到底什么是抽象呢，维基百科上的解释是这样的：
+
+抽象就是把一个问题或模型，以不同规则或方法所得出的不同的解（求解方法和解本身即抽象层），这些不同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java复习笔记之对象导论（一）">
+<meta property="og:url" content="http://wuminmiao.com/2016/10/09/java_notes_01/index.html">
+<meta property="og:site_name" content="Mushroom">
+<meta property="og:description" content="前言在android的学习过程中，我时常感到自己的Java基础掌握的不够牢靠，极大地拉低了android开发的效率，所以我准备花费一段时间系统地复习一下Java。这次复习的参考书籍是大名鼎鼎的《Java编程思想》。
+抽象过程所有的编程语言都有抽象机制，那么到底什么是抽象呢，维基百科上的解释是这样的：
+
+抽象就是把一个问题或模型，以不同规则或方法所得出的不同的解（求解方法和解本身即抽象层），这些不同">
+<meta property="og:image" content="http://oef7j4xoz.bkt.clouddn.com/light.png">
+<meta property="og:updated_time" content="2017-03-13T14:51:57.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java复习笔记之对象导论（一）">
+<meta name="twitter:description" content="前言在android的学习过程中，我时常感到自己的Java基础掌握的不够牢靠，极大地拉低了android开发的效率，所以我准备花费一段时间系统地复习一下Java。这次复习的参考书籍是大名鼎鼎的《Java编程思想》。
+抽象过程所有的编程语言都有抽象机制，那么到底什么是抽象呢，维基百科上的解释是这样的：
+
+抽象就是把一个问题或模型，以不同规则或方法所得出的不同的解（求解方法和解本身即抽象层），这些不同">
+<meta name="twitter:image" content="http://oef7j4xoz.bkt.clouddn.com/light.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6336751444032488000,
+      author: 'Admin'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wuminmiao.com/2016/10/09/java_notes_01/"/>
+
+  <title> Java复习笔记之对象导论（一） | Mushroom </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c61bad8ce30d51d5f18dbd67b8dabf1c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mushroom</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Final maze</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java复习笔记之对象导论（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-09T22:32:08+08:00" content="2016-10-09">
+              2016-10-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+            
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/09/java_notes_01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/09/java_notes_01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在android的学习过程中，我时常感到自己的Java基础掌握的不够牢靠，极大地拉低了android开发的效率，所以我准备花费一段时间系统地复习一下Java。这次复习的参考书籍是大名鼎鼎的<a href="https://book.douban.com/subject/1313042/" target="_blank" rel="external">《Java编程思想》</a>。</p>
+<h2 id="抽象过程"><a href="#抽象过程" class="headerlink" title="抽象过程"></a>抽象过程</h2><p>所有的编程语言都有抽象机制，那么到底什么是抽象呢，维基百科上的解释是这样的：</p>
+<blockquote>
+<p>抽象就是把一个问题或模型，以不同规则或方法所得出的不同的解（求解方法和解本身即抽象层），这些不同的解可以组合并还原成问题或模型的本身。</p>
+</blockquote>
+<p>人们所解决问题的复杂度取决于该问题的抽象的类型和质量，所谓的类型是指<strong>“所抽象的是什么”</strong>。比如汇编语言是对计算机底层的轻微抽象；C等“命令式“语言则是针对汇编语言进行抽象，这些语言虽然在汇编语言的基础上有了很大的改进，但是本质上它们所作的主要抽象仍要求在解决问题时要基于计算机的结构，而不是基于所要解决问题的结构去考虑。<br><a id="more"></a></p>
+<p><em>程序员要做的是让机器模型（位于”解空间“内，即问题建模的地方，比如我们的计算机）和实际待解决问题的模型（位于”问题空间内“，即问题存在的地方，比如一些业务）建立起关联。而这个关联的过程就是编程。</em></p>
+<p>编程方式众多，面向对象的方式便是其中之一。这种表示方式非常通用，它使我们不用受限于任何特定类型的问题。我们把问题空间中的元素以及其在解空间的表示称为<strong>“对象”</strong>。这种思想的实质是：<strong>程序可以通过添加新类型的对象使自身适用于每个特定问题。</strong>也就是说，我们在阅读解决问题的代码的同时也在阅读问题的描述。这种语言抽象相比较其他语言更加的灵活和强有力。所以<strong>OOP（面向对象程序设计）</strong>允许根据问题描述问题，而不是以往的根据允许解决方案的计算机来解决。<strong>每个对象就像是一个微型计算机，它既有状态，又有操作，用户可以要求对象执行这些操作。拿现实世界的对象作类比的话，那么说它们都具有特性和行为似乎不错。</strong></p>
+<h3 id="面象对象语言的五个基本特性"><a href="#面象对象语言的五个基本特性" class="headerlink" title="面象对象语言的五个基本特性"></a>面象对象语言的五个基本特性</h3><ul>
+<li><strong>万物皆为对象</strong><br>对象可以视为一个奇特的变量，他可以存储数据，也可以要求它对自身执行操作。理论上讲，我们可以抽取待解决问题的任何概念化构件（人、狗、建筑物、服务等）将其表示为程序里的对象。</li>
+<li><strong>程序是对象的集合，它们可以通过发送消息来告知彼此所要做的</strong><br>要想请求一个对象，就必须对该对象发送一条消息，更具体点说，可以把消息想象为对某个特定对象的调用请求。</li>
+<li><strong>每个对象都有自己的由其他对象所构成的存储</strong><br>换句话说，可以通过创建包含现有对象的包的方式来创建新类型的对象。因此，可以在程序中构件复杂的体系，同时将其复杂性隐藏在对象的简单性背后。</li>
+<li><strong>每个对象都拥有其类型</strong><br>按照通用的说法，“每个对象都是某个类(class)的一个实例(instance)”，这里的”类“就是”类型“的同义词。每个类最重要的区别于其他类的特性就是”可以发送什么样的消息给它“。</li>
+<li><strong>某个特定类型的所有对象都可以接受同样的消息</strong><br>比如一个”圆形“类型的对象同时也是”几何形“类型的对象，所以一个”圆形“对象必定能够接受发送给”几何形“对象的消息。这种可替代性(substitutability)是OOP中最强有力的概念之一。<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结：</strong></h4><em>对象具有状态、行为和标识。这意味着每一个对象都可以拥有内部数据（它们给出了对象的状态）和方法（它们产生行为），而且每一个对象都可以唯一地与其他对象区分开来（比如我们可以区分人与人之间的不同）。</em></li>
+</ul>
+<h2 id="每个对象都有一个接口"><a href="#每个对象都有一个接口" class="headerlink" title="每个对象都有一个接口"></a>每个对象都有一个接口</h2><p><a href="http://baike.baidu.com/link?url=m2JLgAZTTdGY0zWehMWYAZh8j6eKXtX0mRelzgj7EA-4BjtNv4yBI_xSH4pOmmLyPPjGtYrcRPnwIh8Ty0toEu2KWNzRCvTASoOmJNbKfvnSFwF7VPkfExbXG2Fm3dbOzNQ2GDn2l-s83w2SYQxd-_" target="_blank" rel="external">亚里士多德</a>可能是第一个深入研究<strong>类型(type)</strong>的哲学家，他曾提出鱼类和鸟类这样的概念。所有的对象都是唯一的，但同时是具有相同特性和行为的对象所归属的类的一部分。</p>
+<p>创建抽象数据类型（类）是OOP的基本概念之一。抽象数据类型的运行方式和内置(built-in)类型几乎完全一致：你可以创建某一类型的对象（或者叫做实例），然后操作这些对象（发送消息或请求；发送消息，对象就知道要做什么）。</p>
+<p>每个类的成员或元素<strong>都具有某种共性</strong>（比如每个人都有名字，每只狗都会“汪汪”叫），同时每个成员<strong>都有其自身的状态</strong>（比如他叫张三，我叫李四；这只狗叫旺财，那只狗叫小黑）。因此诸如人和狗等都可以在计算机程序中被表示为唯一的实体。这些实体就是对象，<strong>每个对象都属于定义了特性和行为的每个特定的类。</strong></p>
+<p>所以，尽管我们在OOP中实际上进行的是创建新的数据类型，但事实上所有的OOP语言都是用class这个关键字来表示数据类型。当看到类型一词时，可将其作为类来考虑，反之亦然。</p>
+<p>因为类描述了具有相同特性（数据元素）和行为（功能）的对象集合，所以<strong>一个类实际上就是一个数据类型</strong>。程序员可以通过定义类来适应问题，而不再被迫使用现有的用来表示机器中的存储单元的数据类型，可以根据需求，通过增加新的数据类型来扩展编程语言，而编程系统欣然接受新的类，并且像对待内置类型一样地照管它们和进行类型检查。</p>
+<p>如何才能获得有用的对象呢？必须有某种方式产生对对象的请求，使对象完成各种任务，如完成一笔交易，打开一个开关，在屏幕上画图等等。每个对象都只能满足某些请求，这些请求由对象的<strong>接口(interface)</strong>定义，决定接口的便是类型。</p>
+<p><strong>接口确定了对某一特定对象所能发出的请求。</strong>但是，在程序中必须有满足这些请求的代码，这些代码与隐藏的数据一起构成了实现。在类型中，每一个可能的请求都有一个方法与之相关联，当对象发送请求时，与之相关联的方法就会被调用。此过程通常被概括为：向某个对象“发送消息”（产生请求），这个对象便知道此消息的目的，然后执行对应的程序代码。以电灯泡为例做一个简单的比喻（下图所示）：<br><img src="http://oef7j4xoz.bkt.clouddn.com/light.png" alt="UML图"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Light lt = <span class="keyword">new</span> Light();</div><div class="line">lt.on();</div></pre></td></tr></table></figure></p>
+<p>上例中，类型/类的名称是Light，特定的Light对象的名称是lt，可以向Light对象发出的请求是：打开它、关闭它、将它调亮、将它调暗。以下列方式创建了一个Light对象：定义一个对象的“引用”(<strong>lt</strong>),然后调用<strong>new</strong>方法来创建该类型的新对象。为了向对象发送消息，需要声明对象的名称，并以英文句号连接一个消息请求。从预定义类的用户观点来看，这些差不多就是用对象进行设计的全部。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/面向对象/" rel="tag">#面向对象</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/01/my_blog/" rel="next" title="我的博客上线了">
+                <i class="fa fa-chevron-left"></i> 我的博客上线了
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/13/android_recycle_view_test_01/" rel="prev" title="Android RecyclerView的使用解析（一）">
+                Android RecyclerView的使用解析（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/09/java_notes_01/"
+     data-title="Java复习笔记之对象导论（一）"
+     data-content=""
+     data-url="http://wuminmiao.com/2016/10/09/java_notes_01/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/09/java_notes_01/"
+           data-title="Java复习笔记之对象导论（一）" data-url="http://wuminmiao.com/2016/10/09/java_notes_01/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oef7j4xoz.bkt.clouddn.com/Find-Your-Inner-Animal.jpg"
+               alt="Minmiao Wu" />
+          <p class="site-author-name" itemprop="name">Minmiao Wu</p>
+          <p class="site-description motion-element" itemprop="description">做有意义的事</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mkdirmushroom" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1751169465" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象过程"><span class="nav-number">2.</span> <span class="nav-text">抽象过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#面象对象语言的五个基本特性"><span class="nav-number">2.1.</span> <span class="nav-text">面象对象语言的五个基本特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结："><span class="nav-number">2.1.1.</span> <span class="nav-text">总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#每个对象都有一个接口"><span class="nav-number">3.</span> <span class="nav-text">每个对象都有一个接口</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minmiao Wu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">您是第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位访客</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wuminmiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
